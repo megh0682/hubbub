@@ -12,6 +12,10 @@
             .datespan {font-size: smaller;}
             .contentdiv {background-color: lightgray; margin: 8px; padding: 8px;}
             .footer {background-color: #fedcba;}
+            .submitclass{alignment-adjust: after-edge;}
+            .loggedInUser{font-size: larger;}
+            .loginlogoutdiv{margin: 8px; padding: 8px;font-style: italic;font-size: larger}
+                       
         </style>
     </head>
     <body>
@@ -28,10 +32,28 @@
                     ${post.content}
                 </div>
                 <span class="datespan">Posted ${post.postDate}</span>
-            </div>
+        </div>
         </c:forEach>
+        <c:choose>
+        <c:when test="${sessionScope.loginBean!=null}">
+        <div class ="postdiv">
+        <form action="posts" method="POST">
+        <a href="#" class="loggedInUser">${sessionScope.loginBean.username}</a> post something new!<br>
+        <textarea name="postArea" rows="5"></textarea>
+        <input type="submit" value="Publish to Timeline" class="submitclass">
+        </form>
+        </div>
+        <div class ="loginlogoutdiv">
+            <b><a href="posts?logout">Logout</a></b>
+        </c:when>    
+        <c:otherwise>
+        <div class ="loginlogoutdiv">
+            <b><a href="login.jsp">Login to Hubbub to post new comments!</a></b><br>
+        </div>
+        </c:otherwise>
+        </c:choose>
         <h3 class="footer">
             Copyright 2015 www.austincc.edu and www.bytecaffeine.com
         </h3>
-    </body>
+        </body>
 </html>
